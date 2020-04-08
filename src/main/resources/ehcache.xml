@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+
+    <!-- 磁盘缓存位置 -->
+    <diskStore path="java.io.tmpdir/ehcache"/>
+
+    <!-- 默认缓存 -->
+    <defaultCache
+            maxEntriesLocalHeap="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            maxEntriesLocalDisk="10000000"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </defaultCache>
+
+    <!-- 自定义缓存 -->
+    <cache name="HelloWorldCache"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="5"
+           timeToLiveSeconds="5"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <!-- 缓存持久化 调用cache.flush()、cacheManager.shutdown()时主动持久化-->
+    <!--overflowToDisk设置成true，当内存中缓存的元素数量达到maxElementsInMemory设定的值时，数值会存到硬盘上去-->
+    <!--diskPersistent设置成true表示缓存虚拟机重启期数据-->
+    <cache name="PersistentCache"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="50000"
+           timeToLiveSeconds="50000"
+           overflowToDisk="true"
+           diskPersistent="true"
+           memoryStoreEvictionPolicy="LRU"/>
+</ehcache>
